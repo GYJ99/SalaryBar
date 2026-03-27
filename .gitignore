@@ -12,4 +12,5 @@ DerivedData/
 .codex/*
 test.txt
 /docs/*.md
+!/docs/SalaryBar-产品介绍与使用说明.md
 .codex
