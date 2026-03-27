@@ -208,7 +208,7 @@
 
 点击菜单栏后，会打开主面板。主面板负责集中展示当天最关键的收入和节奏信息。
 
-![主面板预览](screenshots/dashboard.png)
+![主面板预览](docs/screenshots/dashboard.png)
 
 在这里你通常能看到：
 
@@ -225,7 +225,7 @@
 
 这一部分会进一步解释你当前所处的工作状态。
 
-![今日节奏预览](screenshots/today-rhythm.png)
+![今日节奏预览](docs/screenshots/today-rhythm.png)
 
 它会结合你的工作时段，展示类似这样的信息：
 
@@ -247,7 +247,7 @@
 
 ### 5.4 目标与成就区域
 
-![目标成就预览](screenshots/achievement-goals.png)
+![目标成就预览](docs/screenshots/achievement-goals.png)
 
 这里会展示一组按照金额排序的目标项，并标记：
 
@@ -266,19 +266,19 @@
 - 目标
 - 显示
 
-![工资设置](screenshots/settings-salary.png)
+![工资设置](docs/screenshots/settings-salary.png)
 
 工资页面用于定义你的计薪方式和实时换算基准。
 
-![时间设置](screenshots/settings-time.png)
+![时间设置](docs/screenshots/settings-time.png)
 
 时间页面用于定义工作日、上下班时间和午休规则。
 
-![目标设置](screenshots/settings-goals.png)
+![目标设置](docs/screenshots/settings-goals.png)
 
 目标页面用于查看系统推荐的回血目标及当前目标层级。
 
-![显示设置](screenshots/settings-display.png)
+![显示设置](docs/screenshots/settings-display.png)
 
 显示页面用于调整菜单栏外观、数字样式、通知和开机启动偏好。
 
