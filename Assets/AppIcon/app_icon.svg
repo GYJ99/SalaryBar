@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+    <!-- 定义渐变和阴影，增强质感 -->
+    <defs>
+        <!-- 沙漏玻璃身体的柔和渐变 -->
+        <linearGradient id="glassGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#f0f0f5; stop-opacity:0.8" />
+            <stop offset="100%" style="stop-color:#e0e0e8; stop-opacity:0.6" />
+        </linearGradient>
+        <!-- 金币（已赚取）的金色渐变 -->
+        <linearGradient id="goldGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" style="stop-color:#f1c40f; stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#f39c12; stop-opacity:1" />
+        </linearGradient>
+        <!-- 沙漏木质（或金属）框架的渐变 -->
+        <linearGradient id="frameGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#acafb3; stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#bdc3c7; stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#acafb3; stop-opacity:1" />
+        </linearGradient>
+        <!-- 用于金币堆叠的轻微阴影效果 -->
+        <filter id="shadow" x="0" y="0" width="120%" height="120%">
+            <feOffset result="offOut" in="SourceAlpha" dx="2" dy="4" />
+            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="3" />
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+        </filter>
+    </defs>
+
+    <!-- 背景：带有 macOS 风格圆角的背景板，轻微底色 -->
+    <rect x="0" y="0" width="1024" height="1024" rx="160" ry="160" fill="#fcfcfd" stroke="#e1e1e6" stroke-width="2"/>
+
+    <!-- ==================== 沙漏框架 ==================== -->
+    <!-- 顶部和底部横梁 -->
+    <rect x="256" y="160" width="512" height="60" rx="20" ry="20" fill="url(#frameGradient)"/>
+    <rect x="256" y="804" width="512" height="60" rx="20" ry="20" fill="url(#frameGradient)"/>
+    
+    <!-- 侧边支柱 (左) -->
+    <rect x="280" y="210" width="40" height="604" rx="10" ry="10" fill="#acafb3"/>
+    <!-- 侧边支柱 (右) -->
+    <rect x="704" y="210" width="40" height="604" rx="10" ry="10" fill="#acafb3"/>
+
+
+    <!-- ==================== 沙漏玻璃主体 ==================== -->
+    <!-- 使用 Path 绘制复杂的沙漏形状 -->
+    <path d="M 350,220 
+             L 674,220 
+             C 674,220, 650,480, 532,490 
+             C 414,480, 350,220, 350,220 Z" 
+          fill="url(#glassGradient)" stroke="#bdc3c7" stroke-width="4"/>
+    <path d="M 350,804 
+             L 674,804 
+             C 674,804, 650,544, 532,534 
+             C 414,544, 350,804, 350,804 Z" 
+          fill="url(#glassGradient)" stroke="#bdc3c7" stroke-width="4"/>
+    
+    <!-- 连接处的窄口 -->
+    <rect x="512" y="490" width="0" height="44" stroke="#bdc3c7" stroke-width="4"/>
+
+
+    <!-- ==================== 金钱和时间流动 ==================== -->
+    
+    <!-- 1. 下半部分：已赚取的金币堆叠 (B1 写实风格) -->
+    <!-- 堆叠的硬币轮廓 -->
+    <g transform="translate(0, 50)" filter="url(#shadow)">
+        <ellipse cx="532" cy="710" rx="140" ry="60" fill="url(#goldGradient)" stroke="#e67e22" stroke-width="3"/>
+        <ellipse cx="532" cy="680" rx="120" ry="50" fill="#f1c40f" stroke="#e67e22" stroke-width="3"/>
+        <ellipse cx="532" cy="655" rx="90" ry="40" fill="#f39c12" stroke="#e67e22" stroke-width="3"/>
+    </g>
+
+    <!-- 2. ¥ 符号：清晰地印在金币堆叠的中心位置 -->
+    <text x="532" y="735" text-anchor="middle" font-family="Verdana, Geneva, sans-serif" font-size="120" font-weight="bold" fill="#ffffff" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+        ¥
+    </text>
+
+    <!-- 3. 滴落的轨迹：正在转化的每一秒 -->
+    <!-- 滴落的小金币/光点 -->
+    <circle cx="532" cy="512" r="12" fill="#f1c40f"/>
+    <circle cx="532" cy="560" r="10" fill="#f39c12"/>
+    <circle cx="532" cy="600" r="8" fill="#f1c40f"/>
+
+    <!-- 4. 上半部分：剩余的时间（淡淡的灰色，代表潜能） -->
+    <!-- 抽象的时间颗粒 -->
+    <ellipse cx="532" cy="320" rx="100" ry="40" fill="#bdc3c7" opacity="0.5"/>
+    <ellipse cx="532" cy="360" rx="70" ry="30" fill="#bdc3c7" opacity="0.3"/>
+
+</svg>
