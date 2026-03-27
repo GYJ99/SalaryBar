@@ -10,6 +10,17 @@ has_icon_sources() {
   [[ -f "$ICON_PREBUILT_ICNS" || -f "$ICON_SOURCE_SVG" ]]
 }
 
+find_setfile() {
+  if command -v SetFile >/dev/null 2>&1; then
+    command -v SetFile
+    return 0
+  fi
+
+  if command -v xcrun >/dev/null 2>&1; then
+    xcrun --find SetFile 2>/dev/null || true
+  fi
+}
+
 render_from_svg() {
   local size="$1"
   local output_path="$2"
@@ -76,12 +87,16 @@ install_app_icon() {
 
 install_dmg_volume_icon() {
   local staging_dir="$1"
+  local setfile_bin=""
 
   if ! build_app_icon; then
     return 1
   fi
 
   cp "$GENERATED_ICON_PATH" "$staging_dir/.VolumeIcon.icns"
-  SetFile -a V "$staging_dir/.VolumeIcon.icns"
-  SetFile -a C "$staging_dir"
+  setfile_bin="$(find_setfile)"
+  if [[ -n "$setfile_bin" ]]; then
+    "$setfile_bin" -a V "$staging_dir/.VolumeIcon.icns"
+    "$setfile_bin" -a C "$staging_dir"
+  fi
 }

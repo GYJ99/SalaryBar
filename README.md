@@ -4,7 +4,7 @@
 
 它会把月薪或时薪换算成实时收入，在顶部栏按秒显示“今天已经赚了多少钱”，并通过回血目标、节奏状态、剩余潜力等信息，把抽象工资变成更有感知的工作反馈。
 
-<!-- VERSION:START -->当前版本：`1.0.3`<!-- VERSION:END -->
+[![Latest Release](https://img.shields.io/github/v/release/GYJ99/SalaryBar?display_name=tag)](https://github.com/GYJ99/SalaryBar/releases/latest)
 
 ## 项目定位
 
@@ -143,10 +143,10 @@ swift test
 
 脚本默认读取根目录的 `VERSION` 文件：
 
-- `VERSION`：作为 README 展示版本、应用版本号和 DMG 文件名的唯一来源
+- `VERSION`：作为应用版本号和 DMG 文件名的唯一来源
 - `BUILD_NUMBER`：默认取当前 commit 数
 
-执行打包时，脚本会先同步 README 里的“当前版本”显示，再生成 `SalaryBar-<version>.dmg`。
+README 顶部版本展示改为读取 GitHub 最新 Release，不再由打包脚本回写仓库文件。
 
 ### 手动指定版本号
 
@@ -210,7 +210,7 @@ NOTARY_PROFILE="AC_PROFILE" \
 
 - [release.yml](.github/workflows/release.yml)
 
-它会在你推送 `main` 分支时自动：
+它会在你推送包含 `VERSION` 变更的 `main` 提交时自动：
 
 1. 在 GitHub 的 macOS Runner 上构建项目
 2. 读取根目录 `VERSION`
@@ -220,9 +220,11 @@ NOTARY_PROFILE="AC_PROFILE" \
 
 ### 使用方式
 
-先修改 `VERSION` 文件，再推送 `main`：
+先修改 `VERSION` 文件并提交，再推送 `main`：
 
 ```bash
+git add VERSION
+git commit -m "Bump version to <version>"
 git push origin main
 ```
 

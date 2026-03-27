@@ -188,7 +188,6 @@ main() {
   derive_version_info
 
   mkdir -p "$DIST_DIR"
-  sync_readme_version "$VERSION"
 
   if [[ "$RUN_TESTS" == "1" ]]; then
     log "Running tests"
