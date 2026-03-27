@@ -11,3 +11,5 @@ DerivedData/
 .netrc
 .codex/*
 test.txt
+/docs/*.md
+.codex
