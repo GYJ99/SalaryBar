@@ -4,6 +4,8 @@
 
 它会把月薪或时薪换算成实时收入，在顶部栏按秒显示“今天已经赚了多少钱”，并通过回血目标、节奏状态、剩余潜力等信息，把抽象工资变成更有感知的工作反馈。
 
+<!-- VERSION:START -->当前版本：`1.0.3`<!-- VERSION:END -->
+
 ## 项目定位
 
 `SalaryBar` 不是网页小工具，也不是复杂记账软件。
@@ -137,14 +139,14 @@ swift test
 - `dist/SalaryBar.app`
 - `dist/SalaryBar-<version>.dmg`
 
-### 使用 Git 自动生成版本号
+### 版本号来源
 
-脚本默认会优先尝试读取 Git 信息：
+脚本默认读取根目录的 `VERSION` 文件：
 
-- `VERSION`：优先取最近的 tag，例如 `v1.2.0` 会变成 `1.2.0`
-- `BUILD_NUMBER`：优先取当前 commit 数
+- `VERSION`：作为 README 展示版本、应用版本号和 DMG 文件名的唯一来源
+- `BUILD_NUMBER`：默认取当前 commit 数
 
-如果仓库还没打 tag，会自动回退到默认值。
+执行打包时，脚本会先同步 README 里的“当前版本”显示，再生成 `SalaryBar-<version>.dmg`。
 
 ### 手动指定版本号
 
@@ -158,10 +160,10 @@ VERSION=1.0.1 BUILD_NUMBER=12 ./scripts/package_release.sh
 RUN_TESTS=1 ./scripts/package_release.sh
 ```
 
-### 关闭 Git 版本推导
+### 临时覆盖版本号
 
 ```bash
-USE_GIT_VERSION=0 VERSION=1.0.0 BUILD_NUMBER=1 ./scripts/package_release.sh
+VERSION=1.0.4 BUILD_NUMBER=1 ./scripts/package_release.sh
 ```
 
 ## 签名与公证
@@ -204,33 +206,27 @@ NOTARY_PROFILE="AC_PROFILE" \
 
 ## GitHub Release 自动上传
 
-可以实现，而且仓库里已经加好了工作流：
+仓库里已经加好了自动发布工作流：
 
 - [release.yml](.github/workflows/release.yml)
 
-它会在你推送 `v*` 标签时自动：
+它会在你推送 `main` 分支时自动：
 
 1. 在 GitHub 的 macOS Runner 上构建项目
-2. 生成 `.dmg`
-3. 自动创建 GitHub Release
-4. 把 `.dmg` 和 `SHA256SUMS.txt` 上传到 Release Assets
+2. 读取根目录 `VERSION`
+3. 生成 `dist/SalaryBar-<version>.dmg`
+4. 自动创建或更新 `v<version>` 对应的 GitHub Release
+5. 把该版本的 `.dmg` 和 `SHA256SUMS.txt` 上传到 Release Assets
 
 ### 使用方式
 
-提交代码后执行：
+先修改 `VERSION` 文件，再推送 `main`：
 
 ```bash
-git tag v1.0.0
-git push origin main --tags
+git push origin main
 ```
 
-或者只推标签：
-
-```bash
-git push origin v1.0.0
-```
-
-然后到 GitHub 仓库的 `Actions` / `Releases` 页面就能看到自动生成的发布版本。
+如果版本号没变，Release 里的同名资产会被覆盖更新；如果版本号变了，会生成新的 `v<version>` Release。
 
 ### 说明
 
@@ -260,7 +256,7 @@ git push origin v1.0.0
 
 - 源码入仓库
 - 产物通过 GitHub Releases 上传
-- 用 tag 驱动 `VERSION`
+- 版本号由根目录 `VERSION` 统一管理
 
 ## 后续可继续扩展
 

@@ -5,6 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIST_DIR="$ROOT_DIR/dist"
 STAGING_DIR="$DIST_DIR/dmg-staging"
 source "$ROOT_DIR/scripts/icon_support.sh"
+source "$ROOT_DIR/scripts/version_support.sh"
 
 APP_NAME="${APP_NAME:-SalaryBar}"
 DISPLAY_NAME="${DISPLAY_NAME:-SalaryBar}"
@@ -13,7 +14,6 @@ VERSION="${VERSION:-}"
 BUILD_NUMBER="${BUILD_NUMBER:-}"
 MIN_MACOS_VERSION="${MIN_MACOS_VERSION:-13.0}"
 RUN_TESTS="${RUN_TESTS:-0}"
-USE_GIT_VERSION="${USE_GIT_VERSION:-1}"
 SIGN_IDENTITY="${SIGN_IDENTITY:-}"
 NOTARIZE="${NOTARIZE:-0}"
 NOTARY_PROFILE="${NOTARY_PROFILE:-}"
@@ -38,22 +38,16 @@ has_cmd() {
 }
 
 derive_version_info() {
-  local git_tag=""
   local commit_count=""
   local short_sha=""
 
-  if [[ "$USE_GIT_VERSION" == "1" ]] && has_cmd git && git -C "$ROOT_DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    git_tag="$(git -C "$ROOT_DIR" describe --tags --abbrev=0 2>/dev/null || true)"
+  if has_cmd git && git -C "$ROOT_DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     commit_count="$(git -C "$ROOT_DIR" rev-list --count HEAD 2>/dev/null || true)"
     short_sha="$(git -C "$ROOT_DIR" rev-parse --short HEAD 2>/dev/null || true)"
   fi
 
   if [[ -z "$VERSION" ]]; then
-    if [[ -n "$git_tag" ]]; then
-      VERSION="${git_tag#v}"
-    else
-      VERSION="1.0.0"
-    fi
+    VERSION="$(read_config_version)"
   fi
 
   if [[ -z "$BUILD_NUMBER" ]]; then
@@ -194,6 +188,7 @@ main() {
   derive_version_info
 
   mkdir -p "$DIST_DIR"
+  sync_readme_version "$VERSION"
 
   if [[ "$RUN_TESTS" == "1" ]]; then
     log "Running tests"
