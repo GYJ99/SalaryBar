@@ -12,6 +12,8 @@ permissions:
 jobs:
   release:
     runs-on: macos-14
+    env:
+      VERSION: ${{ github.ref_type == 'tag' && github.ref_name || '1.0.0' }}
 
     steps:
       - name: Checkout
@@ -20,17 +22,36 @@ jobs:
       - name: Build DMG
         run: |
           chmod +x scripts/package_release.sh
-          RUN_TESTS=1 ./scripts/package_release.sh
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          fi
+          RUN_TESTS=1 VERSION="${VERSION}" ./scripts/package_release.sh
+
+      - name: Resolve release assets
+        id: assets
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            version="${GITHUB_REF_NAME#v}"
+          else
+            version="${VERSION}"
+          fi
+          dmg_path="dist/SalaryBar-${version}.dmg"
+          if [[ ! -f "${dmg_path}" ]]; then
+            echo "Expected DMG not found: ${dmg_path}" >&2
+            exit 1
+          fi
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+          echo "dmg_path=${dmg_path}" >> "${GITHUB_OUTPUT}"
 
       - name: Generate SHA256
         run: |
-          shasum -a 256 dist/*.dmg > dist/SHA256SUMS.txt
+          shasum -a 256 "${{ steps.assets.outputs.dmg_path }}" > dist/SHA256SUMS.txt
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/*.dmg
+            ${{ steps.assets.outputs.dmg_path }}
             dist/SHA256SUMS.txt
           generate_release_notes: true
           draft: false
