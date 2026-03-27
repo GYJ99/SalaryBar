@@ -6,6 +6,10 @@ on:
       - main
     paths:
       - VERSION
+      - Package.swift
+      - .github/workflows/release.yml
+      - scripts/**
+      - Assets/AppIcon/**
   workflow_dispatch:
 
 permissions:
