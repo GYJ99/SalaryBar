@@ -58,21 +58,47 @@ SalaryBar/
 
 ## 界面预览
 
-### 顶部栏详情面板
+`SalaryBar` 的交互重点不是复杂表格，而是让你在顶部栏里快速感知“今天已经回血多少、还差多少、下一步值不值得继续扛”。
+
+### 顶部栏主面板
 
 <p align="center">
   <img src="docs/screenshots/dashboard.png" width="360" alt="SalaryBar 详情面板">
 </p>
 
-今日已赚、实时速率、当前目标和暂停操作都集中在这个弹层里，适合在工作过程中快速扫一眼当前回血进度。
+主面板集中展示今日已赚、实时速率、当前目标、暂停状态和关键操作。打开顶部栏后，不需要进入设置页，也能立刻知道今天的回血进度。
 
-### 设置窗口
+### 今日节奏与回血潜力
 
-| 时间配置 | 目标配置 |
+<p align="center">
+  <img src="docs/screenshots/today-rhythm.png" width="360" alt="SalaryBar 今日节奏">
+</p>
+
+这一块把工作日拆成更有感知的区段：当前所处节奏、今天的理论封顶、剩余可回血金额、剩余工时和进度条都会同步展示，适合拿来判断“今天还能不能再撑一会儿”。
+
+### 搞钱成就与目标解锁
+
+<p align="center">
+  <img src="docs/screenshots/achievement-goals.png" width="360" alt="SalaryBar 搞钱成就">
+</p>
+
+目标系统会把抽象收入换成更直观的里程碑。每个目标都有进度、解锁状态和金额映射，完成后可以配合通知提醒，减少单纯盯数字带来的疲劳感。
+
+### 设置窗口总览
+
+设置窗口按工资、时间、目标、显示四个方向拆开，既保留必要配置项，也尽量让实时预览直接暴露在表单里。
+
+| 工资配置 | 时间配置 |
 | --- | --- |
-| <img src="docs/screenshots/settings-time.png" alt="SalaryBar 时间设置" width="480"> | <img src="docs/screenshots/settings-goals.png" alt="SalaryBar 目标设置" width="480"> |
+| <img src="docs/screenshots/settings-salary.png" alt="SalaryBar 工资设置" width="480"> | <img src="docs/screenshots/settings-time.png" alt="SalaryBar 时间设置" width="480"> |
 
-设置窗口按工资、时间、目标、显示四类信息拆分，常用的工作日、上下班时间、午休开关和智能目标都可以直接调整。
+工资页负责定义计薪方式、月工时和实时换算结果；时间页则处理工作日、上下班时间、午休以及常见作息预设。
+
+| 目标配置 | 显示配置 |
+| --- | --- |
+| <img src="docs/screenshots/settings-goals.png" alt="SalaryBar 目标设置" width="480"> | <img src="docs/screenshots/settings-display.png" alt="SalaryBar 显示设置" width="480"> |
+
+目标页用于维护回血目标列表和推荐目标；显示页负责顶部栏样式、数字精度、通知偏好和开机启动等系统级体验。
 
 ## 本地开发
 
